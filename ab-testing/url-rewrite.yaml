@@ -1,0 +1,15 @@
+# Uses rand.double() to generate a random double between 0 and 1 when traffic reaches the endpoint
+# Checks if the value is less than or equal to 0.5 and rewrites the URL path to a different 
+# Otherwise it goes to the original endpoint
+on_http_request:
+  - expressions:
+      - rand.double() <= 0.5
+    actions:
+      - type: url-rewrite
+        config:
+          from: /path/to/test
+          to: /path/to/test-b
+  - actions:
+    - type: forward-internal
+      config:
+        url: https://a.internal

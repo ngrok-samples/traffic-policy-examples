@@ -19,7 +19,7 @@ jobs:
           sudo apt-get install ngrok
       - name: Create LP and CSV files
         env: # Or as an environment variable 
-          NGROK_API_KEY: ${{ secrets.ngrok_api_key }}
+          NGROK_API_KEY: ${{ secrets.NGROK_API_KEY }}
         run: |
           cd $GITHUB_WORKSPACE
           ./scripts/test-policies.sh

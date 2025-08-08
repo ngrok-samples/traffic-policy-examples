@@ -1,0 +1,25 @@
+name: test-policies
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - main
+jobs:
+  create-lp-csv:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - name: Setup ngrok
+        run: |
+          curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /usr/local/share/keyrings/ngrok.asc >/dev/null
+          echo "deb [signed-by=/usr/local/share/keyrings/ngrok.asc] https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list
+          sudo apt-get update
+          sudo apt-get install ngrok
+      - name: Create LP and CSV files
+        env: # Or as an environment variable 
+          NGROK_API_KEY: ${{ secrets.NGROK_API_KEY }}
+        run: |
+          cd $GITHUB_WORKSPACE
+          ./scripts/test-policies.sh

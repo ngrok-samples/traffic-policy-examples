@@ -1,0 +1,12 @@
+# Adds multiple headers to the request, including the client's IP address, the endpoint ID, and the client's location.
+on_http_request:
+  - actions:
+      - type: add-headers
+        config:
+          headers:
+            x-is-ngrok: "1"
+            x-endpoint-id: ${endpoint.id}
+            x-client-ip: ${conn.client_ip}
+            x-client-conn-start: ${conn.ts.start}
+            x-client-loc: ${conn.geo.city}, ${conn.geo.country}
+            x-client-path: ${req.url.path}

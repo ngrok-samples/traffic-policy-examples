@@ -1,0 +1,7 @@
+# This rule removes the X-Powered-By header.
+on_http_request:
+  - actions:
+      - type: remove-headers
+        config:
+          headers:
+            - X-Powered-By

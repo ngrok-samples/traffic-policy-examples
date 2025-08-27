@@ -32,4 +32,4 @@ on_http_request:
             keys:
               sources:
                 additional_jkus:
-                  - https://ngrok.com/.well-known/jwks.json
+                  - https://devoted-unicorn-2.clerk.accounts.dev/.well-known/jwks.json # Example for Clerk, replace with your provider's JWKS URL
